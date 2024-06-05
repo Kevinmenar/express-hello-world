@@ -34,7 +34,9 @@ app.get('/token', (req, res) => {
 // Route to handle the TwiML response
 app.post('/voice', (req, res) => {
   const twiml = new twilio.twiml.VoiceResponse();
-  const dial = twiml.dial();
+  const dial = twiml.dial({
+    callerId: 'Calls' // Use the authenticated user's name as callerId
+  });
   dial.number(req.body.To);
 
   res.type('text/xml');
