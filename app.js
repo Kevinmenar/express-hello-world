@@ -19,13 +19,24 @@ app.use(bodyParser.json());
 app.get('/token', (req, res) => {
   const identity = 'kmendez@gurunet.biz';  // Replace with the identity of the user (could be dynamic)
 
+  console.log("accountSid: ", accountSid)
+  console.log("apiKeySid: ", apiKeySid)
+  console.log("apiKeySecret: ", apiKeySecret)
+  console.log("process.env.TWIML_APP_SID: ", process.env.TWIML_APP_SID)
+
   const voiceGrant = new twilio.jwt.AccessToken.VoiceGrant({
     outgoingApplicationSid: process.env.TWIML_APP_SID,  // Your TwiML App SID
     incomingAllow: true  // Allow incoming calls
   });
 
+  console.log("voiceGrant: ", voiceGrant);
+
   const token = new twilio.jwt.AccessToken(accountSid, apiKeySid, apiKeySecret,{identity: identity});
   token.addGrant(voiceGrant);
+
+  console.log("token: ", token);
+
+  console.log("token.toJwt(): ", token.toJwt());
 
   res.send({ token: token.toJwt() });
 });
