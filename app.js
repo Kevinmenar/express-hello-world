@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 
 // Route to generate Twilio token
 app.get('/token', (req, res) => {
-  const identity = 'Calls';  // Replace with the identity of the user (could be dynamic)
+  const identity = 'kmendez@gurunet.biz';  // Replace with the identity of the user (could be dynamic)
 
   const voiceGrant = new twilio.jwt.AccessToken.VoiceGrant({
     outgoingApplicationSid: process.env.TWIML_APP_SID,  // Your TwiML App SID
