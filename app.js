@@ -24,9 +24,8 @@ app.get('/token', (req, res) => {
     incomingAllow: true  // Allow incoming calls
   });
 
-  const token = new twilio.jwt.AccessToken(accountSid, apiKeySid, apiKeySecret);
+  const token = new twilio.jwt.AccessToken(accountSid, apiKeySid, apiKeySecret,{identity: identity});
   token.addGrant(voiceGrant);
-  token.identity = identity;
 
   res.send({ token: token.toJwt() });
 });
