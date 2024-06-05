@@ -20,7 +20,7 @@ app.get('/token', (req, res) => {
   const identity = 'Calls';  // Replace with the identity of the user (could be dynamic)
 
   const voiceGrant = new twilio.jwt.AccessToken.VoiceGrant({
-    outgoingApplicationSid: 'Calls',  // Your TwiML App SID
+    outgoingApplicationSid: process.env.TWIML_APP_SID,  // Your TwiML App SID
     incomingAllow: true  // Allow incoming calls
   });
 
