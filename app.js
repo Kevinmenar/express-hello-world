@@ -1,6 +1,45 @@
-const express = require("express");
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const twilio = require('twilio');
+
 const app = express();
 const port = process.env.PORT || 3001;
+
+const accountSid = process.env.ACCOUNT_SID; // Your Account SID from www.twilio.com/console
+const authToken = process.env.AUTH_TOKEN;   // Your Auth Token from www.twilio.com/console
+const apiKeySid = process.env.API_KEY_SID;  // Your API Key SID from www.twilio.com/console
+const apiKeySecret = process.env.API_KEY_SECRET;  // Your API Key Secret from www.twilio.com/console
+
+app.use(cors());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+// Route to generate Twilio token
+app.get('/token', (req, res) => {
+  const identity = 'Calls';  // Replace with the identity of the user (could be dynamic)
+
+  const voiceGrant = new twilio.jwt.AccessToken.VoiceGrant({
+    outgoingApplicationSid: 'Calls',  // Your TwiML App SID
+    incomingAllow: true  // Allow incoming calls
+  });
+
+  const token = new twilio.jwt.AccessToken(accountSid, apiKeySid, apiKeySecret);
+  token.addGrant(voiceGrant);
+  token.identity = identity;
+
+  res.send({ token: token.toJwt() });
+});
+
+// Route to handle the TwiML response
+app.post('/voice', (req, res) => {
+  const twiml = new twilio.twiml.VoiceResponse();
+  const dial = twiml.dial();
+  dial.number(req.body.To);
+
+  res.type('text/xml');
+  res.send(twiml.toString());
+});
 
 app.get("/", (req, res) => res.type('html').send(html));
 
