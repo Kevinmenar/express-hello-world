@@ -46,7 +46,7 @@ app.post('/voice', (req, res) => {
   const twiml = new twilio.twiml.VoiceResponse();
   console.log("req: ", req);
   console.log("req.body: ", req.body);
-  console.log("req.body.to: ", req.body.to);
+  console.log("req.body.To: ", req.body.to);
   const dial = twiml.dial({
     callerId: '+14239273988' // Use the authenticated user's name as callerId
   });
