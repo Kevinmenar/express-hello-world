@@ -48,7 +48,7 @@ app.post('/voice', (req, res) => {
   console.log("req.body: ", req.body);
   const obj = JSON.parse(JSON.stringify(req.body));
   console.log("obj: ", obj)
-  console.log("obj.To: ", obj.to);
+  console.log("obj.To: ", obj.To);
   const dial = twiml.dial({
     callerId: '+14239273988' // Use the authenticated user's name as callerId
   });
