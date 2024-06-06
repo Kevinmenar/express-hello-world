@@ -52,7 +52,7 @@ app.post('/voice', (req, res) => {
   const dial = twiml.dial({
     callerId: '+14239273988' // Use the authenticated user's name as callerId
   });
-  dial.number('+50686081422');
+  dial.number(obj.To);
 
 
   res.type('text/xml');
